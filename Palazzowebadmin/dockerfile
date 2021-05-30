@@ -1,0 +1,23 @@
+FROM python:3.9.5
+WORKDIR /webadmin
+EXPOSE 8000
+EXPOSE 85
+EXPOSE 80
+COPY requirements.txt .
+COPY .env .
+RUN /usr/local/bin/python -m pip install --upgrade pip
+RUN pip install -r requirements.txt
+COPY .gitignore .
+COPY Procfile .
+COPY README.md .
+COPY config.py .
+COPY gunicorn-cfg.py .
+COPY requirements-pgsql.txt .
+COPY run.py .
+COPY runtime.txt .
+COPY web.config .
+COPY app/ /webadmin/app/
+COPY media/ /webadmin/media/
+COPY nginx/ /webadmin/nginx
+CMD ["python", "run.py"]
+

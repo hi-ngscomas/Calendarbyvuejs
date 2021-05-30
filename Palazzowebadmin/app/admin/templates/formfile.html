@@ -1,0 +1,164 @@
+{%block form%}
+<div class ="container">
+                <div class="col-sm-4">
+                    <div class="modal fade" id="edit{{jackpot.f_id}}" tabindex="-1" role="dialog" aria-labelledby="edit{{jackpot.f_id}}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h2 class="h6 modal-title">title</h2>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                <form method="POST" action="{{url_for('jackpot_blueprint.editjackpotinfo',id = jackpot.f_id)}}">
+                                    {{ form.hidden_tag() }}
+                                    {{ form.csrf_token }}
+                                    <div class="row">
+                                        <div class="col-12 mb-4">
+                                            <div class="card shadow-sm text-center p-0">
+                                                <div class="card-body pb-5">
+                                                    <ul class="list-group list-group-flush">
+                                                        <li class="list-group-item d-flex align-items-center justify-content-between px-0 border-bottom">
+                                                            <div>
+                                                                <h3 class="h6 mb-1">Display status</h3>
+                                                                <p class="small pe-4">Set as True to show on Application</p>
+                                                            </div>
+                                                            <div>
+                                                                <div class="form-check form-switch">
+                                                                    <input class="form-check-input" type="checkbox" id="user-notification-1">
+                                                                    <label class="form-check-label" for="user-notification-1"></label>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="list-group-item d-flex align-items-center justify-content-between px-0 border-bottom">
+                                                            <div>
+                                                                <div class="form-group" title="The name of Jackpotinfo.">
+                                                                {{ form.name.label(class="form-control-label") }} 
+                                                                    {% if form.name.errors %} 
+                                                                        {{ form.name(class="form-control is-invalid") }}
+                                                                        <div class="invalid-feedback">
+                                                                            {% for error in form.name.errors %}
+                                                                            <span>{{ error }}</span>
+                                                                            {% endfor %}
+                                                                        </div>
+                                                                    {% else %} 
+                                                                        {{ form.name(class="form-control form-control ",placeholder='Jackpotinfo name',value=jackpot.f_name )}}
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <div class="form-group" title="The Value of Jackpotinfo.">
+                                                                {{ form.value.label(class="form-control-label") }} 
+                                                                    {% if form.value.errors %} 
+                                                                        {{ form.value(class="form-control form-control is-invalid") }}
+                                                                        <div class="invalid-feedback">
+                                                                            {% for error in form.value.errors %}
+                                                                            <span>{{ error }}</span>
+                                                                            {% endfor %}
+                                                                        </div>
+                                                                    {% else %} 
+                                                                        {{ form.value(class="form-control",value=jackpot.f_value)}}
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                </div>
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                {{form.submit(class="btn btn-secondary")}}
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class ="container">
+                            <div class="col-sm-4">
+                                <div class="modal fade" id="status{{jackpot.f_id}}" tabindex="-1" role="dialog" aria-labelledby="status{{jackpot.f_id}}" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h2 class="h6 modal-title">Jackpotinfo: {{jackpot.f_name}}</h2>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                        <form method="POST" action="{{url_for('jackpot_blueprint.changejackpotstatus',id=jackpot.f_id)}}">
+                                        {{ form.hidden_tag() }}
+                                        {{ form.csrf_token }}
+                            <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex align-items-center justify-content-between px-0 border-bottom">
+                                <div>
+                                    <h3 class="h6 mb-1">Change status of {{jackpot.f_name}}</h3>
+                                    <p class="small pe-4">
+                                   Drag the slider to the right to agree to
+                                {%if jackpot.status%}
+                                <span class="fw-bold text-danger"> Invisible Jackpot {{jackpot.f_name}} </span>
+                                {%else%}
+                                <span class="fw-bold text-success">Visible  Jackpot {{jackpot.f_name}}</span>
+                                {%endif%}    
+                                    </p>
+                                </div>
+                                <div>
+                                    <div class="col-sm-2">
+                                </div>
+                                    <div class="form-check form-switch">
+                                        {{form.status( class="form-check-input", type="checkbox")}}
+                                    </div>
+                                </div>
+                            </li>
+                            </ul>
+                            </div>
+                            <div class="modal-footer">
+                            {{form.submit(class="btn btn-secondary")}}
+                            </div>
+                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                <div class = "container">
+                    <div class="col-sm-4">
+                    <div class="modal fade" id="remove{{jackpot.f_id}}" tabindex="-1" role="dialog" aria-labelledby="status{{jackpot.f_id}}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h2 class="h6 modal-title text-success">{{jackpot.f_name}}</h2>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                <form method="POST" action="{{url_for('jackpot_blueprint.deletejackpotinfo',id=jackpot.f_id)}}">
+                                            {{ form.hidden_tag() }}
+                                            {{ form.csrf_token }}
+                                <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex align-items-center justify-content-between px-0 border-bottom">
+                                    <div class ="">
+                                        <h3 class="h6 mb-1 text-danger">Remove {{jackpot.f_name}}</h3>
+                                        <p class="small pe-4">
+                                        Drag the slider to the right to agree to delete
+                                <span class="fw-bold text-alerts"> Jackpot Info {{jackpot.f_name}} </span>
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <div class="col-sm-2">
+                                    </div>
+                                        <div class="form-check form-switch">
+                                            {{form.status( class="form-check-input", type="checkbox")}}
+                                        </div>
+                                    </div>
+                                </li>
+                                </ul>
+                                </div>
+                                <div class="modal-footer">
+                                {{form.submit(class="btn btn-secondary")}}
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                            </div>
+{%endblock%}

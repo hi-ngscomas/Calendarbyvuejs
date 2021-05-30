@@ -1,0 +1,28 @@
+version: "3"
+services:
+      apache:
+        container_name: app-calendar-be
+        image: plz/webadmin:latest
+        restart: always
+        networks:
+            - app-network
+        ports:
+            - 8080:80
+            - 8085:85
+            - 8000:8000
+        #volumes:
+            #- /usr/local/python/http:/var/www/html
+            #      nginx:
+            #        restart: always
+            #        image: "nginx:latest"
+            #        ports:
+            #          - "85:85"
+            #        volumes:
+            #          - ./nginx:/etc/nginx/conf.d
+            #        networks:
+            #          - app-network
+            #        depends_on: 
+            #          - apache
+networks:
+        app-network:
+                external: true     

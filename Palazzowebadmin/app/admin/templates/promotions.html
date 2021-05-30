@@ -1,0 +1,288 @@
+{% extends "layouts/base.html" %}
+{% import "_macros.html" as macros %}
+  {% include 'includes/socket.html' %}
+
+{% block title %} Transactions {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+      <div class="d-block mb-4 mb-md-0">
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+              <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                <li class="breadcrumb-item"><a href="{{url_for('admin_blueprint.statistic')}}"><span class="fas fa-home"></span></a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="#">Promotions</a></li>
+              </ol>
+          </nav>
+          <h2 class="h4">All Promotions</h2>
+          <p class="mb-0">Promotions management table of contents</p>
+      </div>
+      
+    <div class="table-settings mb-4">
+        {% for message in get_flashed_messages() %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+    {% endfor %}
+      <div class="row align-items-center justify-content-between">
+          <div class="col col-md-6 col-lg-3 col-xl-4">
+              <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+                <div class="btn-toolbar dropdown">
+                    <button class="btn btn-dark btn-sm me-2 dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="fas fa-plus me-2"></span>Task
+                    </button>
+                    <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-0">
+                        <a class="dropdown-item fw-normal rounded-top" href="{{url_for('admin_blueprint.add_promotion')}}"><span class="fas fa-tasks"></span>Add New Promotion</a>
+                        <div role="separator" class="dropdown-divider my-0">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+      </div>
+  </div>
+  <div class="card card-body shadow-sm table-wrapper table-responsive">
+      <table class="table table-hover">
+          <thead class="thead-light">
+              <tr>
+                  <th>Priority of</th>
+                  <th>Name of</th>						
+                  <th>Last modify</th>
+                  <th>Expired Date</th>
+                  <th>Urldetail</th>
+                  <th>Status</th>
+                  <th>Edit</th>
+              </tr>
+          </thead>
+          <tbody>
+              <!-- Item -->
+            {% for event in events %}
+              <tr>
+                  <td class = "row">
+                  <div class = "col">
+
+                        <form method="POST" action="{{url_for('admin_blueprint.changepromopriup',id=event.idevent)}}">
+                        {{ form.hidden_tag() }}
+                        {{ form.csrf_token }}
+                        {%if event.prioritize == 1%}
+                        <input type="submit" disabled class="row fa fa-angle-up" value="&#9650;" name="up">
+                        {%elif event.prioritize == pagination.total%}
+                        <input type="submit" class="row fa fa-angle-up" value="&#9650;" name="up">
+                        {%else%}
+                        <input type="submit" class="row fa fa-angle-up" value="&#9650;" name="up">
+                        {%endif%}
+                        </form>
+                    </div>
+                    <div class = "col">
+                     <form method="POST" action="{{url_for('admin_blueprint.changepromopridown',id=event.idevent)}}">
+                        {{ form.hidden_tag() }}
+                        {{ form.csrf_token }}
+                        {%if event.prioritize == 1%}
+                        <input type="submit" class="row fa fa-angle-down" value="&#9660;" name ="down">
+                        {%elif event.prioritize ==pagination.total%}
+                        <input type="submit" disabled class="row fa fa-angle-down" value="&#9660;" name ="down">
+                        {%else%}
+                        <input type="submit" class="row fa fa-angle-down" value="&#9660;" name ="down">
+                        {%endif%}
+                    </form>
+                    </div>
+                    <div class = "col">
+                    {{event.prioritize}}
+                    </div>
+                  </td>
+                  <td>
+                        {%if event.status%}
+                      <span class="fw-bold text-success">{{event.eventname}}</span>
+                      {%else%}
+                      <span class="fw-bold text-warning">{{event.eventname}}</span>
+                      {%endif%}
+                  </td>
+                  <td><span class="fw-normal">
+                  {%if event.datemodify == none%}
+                <span class="fw-bold text-warning">Waiting Select days</span>
+
+                  {%else%}
+                  {{event.datemodify}}
+                  {%endif%}
+                  </span></td>                        
+                  <td><span class="fw-normal">
+                                    {%if event.expirydate == none%}
+                <span class="fw-bold text-warning">Waiting Select days</span>
+
+                  {%else%}
+                  {{event.expirydate}}
+                  {%endif%}
+                  </span></td>
+                  <td><span class="fw-bold">{{event.urldetail}}</span></td>
+                  <td>
+                  {%if event.status%}
+                  <span class="fw-bold text-success">Visible</span>
+                  {%else%}
+                  <span class="fw-bold text-warning">Invisible</span>
+                    {%endif%}    
+                  </td>
+                  <td>
+                      <div class="btn-group">
+                          <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <span class="icon icon-sm">
+                                  <span class="fas fa-ellipsis-h icon-dark"></span>
+                              </span>
+                              <span class="sr-only">Toggle Dropdown</span>
+                          </button>
+                          <div class="dropdown-menu py-0">
+                              <a class="dropdown-item rounded-top" href="{{url_for('admin_blueprint.promotionsdays',id=event.idevent)}}"><span class="fas fa-eye me-2"></span>Select days</a>
+                              <a class="dropdown-item" href="{{url_for('admin_blueprint.edit_promotion',id=event.idevent)}}"><span class="fas fa-edit me-2"></span>Edit Promotion</a>
+
+                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#status{{event.idevent}}"><span class="fas fa-check-square" ></span>
+                            
+                {%if event.status%}
+                  <span class="fw-bold text-warning">Disable Promotion</span>
+
+                  {%else%}
+                  <span class="fw-bold text-success">Enable Promotion</span>
+
+                    {%endif%}   
+                            </a>
+                              <a class="dropdown-item text-danger rounded-bottom" data-bs-toggle="modal" data-bs-target="#remove{{event.idevent}}"><span class="fas fa-trash-alt me-2"></span>Remove</a>
+                          </div>
+                  </td>
+              </tr>
+                        <!-- Item -->
+                <div class="col-lg-4">
+                    <div class="modal fade" id="promoprovior{{event.idevent}}" tabindex="-1" role="dialog" aria-labelledby="promoprovior{{event.idevent}}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h2 class="h6 modal-title">{{event.eventname}}</h2>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                <form method="POST" action="#">
+                                            {{ form.hidden_tag() }}
+                                            {{ form.csrf_token }}
+                                    <div class="col-sm-3 mb-3">
+                                        <div class="form-group">
+                                            {{form.privior.label}}
+                                            {{form.privior(class="form-control" ,type="number" ,placeholder=event.prioritize,min="0", value=event.prioritize)}}
+                                        </div>
+                                </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                                {{form.submit(class="btn btn-secondary")}}
+                                    <button type="button" class="btn btn-link text-gray ms-auto" data-bs-dismiss="modal">Close</button>
+                                </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="modal fade" id="status{{event.idevent}}" tabindex="-1" role="dialog" aria-labelledby="status{{event.idevent}}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h2 class="h6 modal-title">{{event.eventname}}</h2>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                <form method="POST" action="{{url_for('admin_blueprint.changepromostatus',id=event.idevent)}}">
+                                            {{ form.hidden_tag() }}
+                                            {{ form.csrf_token }}
+                                <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex align-items-center justify-content-between px-0 border-bottom">
+                                    <div>
+                                        <h3 class="h6 mb-1">Change status of {{event.eventname}}</h3>
+                                        <p class="small pe-4">
+                                   Drag the slider to the right to agree to
+                                    {%if event.status%}
+                                <span class="fw-bold text-danger"> Invisible {{event.eventname}} promotion</span>
+                                {%else%}
+                                <span class="fw-bold text-success">Visible {{event.eventname}} promotion</span>
+                                    {%endif%}    
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <div class="col-sm-2">
+                                    </div>
+                                        <div class="form-check form-switch">
+                                            {{form.status( class="form-check-input", type="checkbox")}}
+                                        </div>
+                                    </div>
+                                </li>
+                                </ul>
+                                </div>
+                                <div class="modal-footer">
+                                {{form.submit(class="btn btn-secondary")}}
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                    <div class="col-sm-4">
+                    <div class="modal fade" id="remove{{event.idevent}}" tabindex="-1" role="dialog" aria-labelledby="status{{event.idevent}}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h2 class="h6 modal-title text-success">{{event.eventname}}</h2>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                <form method="POST" action="{{url_for('admin_blueprint.deletepromotion',id=event.idevent)}}">
+                                            {{ form.hidden_tag() }}
+                                            {{ form.csrf_token }}
+                                <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex align-items-center justify-content-between px-0 border-bottom">
+                                    <div class ="">
+                                        <h3 class="h6 mb-1 text-danger">Remove {{event.eventname}}</h3>
+                                        <p class="small pe-4">
+                            Drag the slider to the right to agree to delete
+                                <span class="fw-bold text-alerts"> {{event.eventname}} promotion</span>
+
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <div class="col-sm-2">
+                                    </div>
+                                        <div class="form-check form-switch">
+                                            {{form.status( class="form-check-input", type="checkbox")}}
+                                        </div>
+                                    </div>
+                                </li>
+                                </ul>
+                                </div>
+                                <div class="modal-footer">
+                                {{form.submit(class="btn btn-secondary")}}
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              {%endfor%}                            
+          </tbody>
+      </table>
+      <div class="card-footer px-3 border-0 d-flex align-items-center justify-content-between">
+          <nav aria-label="Page navigation example">
+              <ul class="pagination mb-0">
+                {% if pagination %}
+                <div class="pagination">
+                    {{ macros.pagination_widget(pagination, '.promotions', fragment='#comments', id=events[0].idevent) }}
+                </div>
+                {% endif %}
+              </ul>
+          </nav>
+          <div class="fw-bold small d-none d-lg-block">Showing <b>{{max}}</b> out of <b>{{pagination.total}}</b> entries</div>
+      </div>
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

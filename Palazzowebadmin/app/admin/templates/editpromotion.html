@@ -1,0 +1,364 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Add new Promotion{% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+  <div class="py-4">
+      <nav aria-label="breadcrumb">
+          <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+              <li class="breadcrumb-item"><a href="{{url_for('admin_blueprint.statistic')}}"><span class="fas fa-home"></span></a></li>
+              <li class="breadcrumb-item"><a href="{{url_for('admin_blueprint.promotions')}}">Promotions</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Add</li>
+          </ol>
+      </nav>
+      <div class="d-flex justify-content-between w-100 flex-wrap">
+          <div class="mb-3 mb-lg-0">
+              <h1 class="h4">Create Promotion</h1>
+          </div>
+         
+      </div>
+  </div>
+
+
+<form method="POST"action="{{url_for('admin_blueprint.edit_promotion',id=id)}}" enctype="multipart/form-data">
+{{ form.hidden_tag()}}
+  <div class="row">
+      <div class="col-12 col-xl-6">
+          <div class="card card-body shadow-sm mb-4">
+                  <div class="row">
+                            <div>
+
+                                <div class="form-group" title="The English title which display daily.">
+                                
+                                {{ form.ENTitle.label(class="form-control-label") }} 
+                                        {% if form.ENTitle.errors %} 
+                                            {{ form.ENTitle(class="form-control form-control is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                 {% for error in form.ENTitle.errors %}
+                                                <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %} 
+                                            {{ form.ENTitle(class="form-control form-control ",placeholder='English Title') }}
+                                        {% endif %}
+
+                                    </div>
+                             </div>
+                             </div>
+                             <div class="row">
+                                <div>
+                                    <div class="form-group" title="The English Detail which display on detail tag.">
+
+                                    {{ form.ENdetail.label(class="form-control-label") }} 
+                                        {% if form.ENdetail.errors %} 
+                                            {{ form.ENdetail(class="form-control form-control is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                 {% for error in form.ENdetail.errors %}
+                                                <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %} 
+                                            {{ form.ENdetail(class="form-control form-control ",placeholder='대한민국 제목') }}
+                                        {% endif %}
+
+                                    </div>
+                      </div>
+                  </div>
+                  <div class="row align-items-center">
+                      <div>
+                    <div class="form-group" title="The English description that only display when click on detail tag." >
+                                    {{ form.ENdescription.label(class="form-control-label") }} 
+                                        {% if form.ENdescription.errors %} 
+                                            {{ form.ENdescription(class="form-control form-control is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                 {% for error in form.ENdescription.errors %}
+                                                <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %} 
+                                            {{ form.ENdescription(class="form-control form-control ",placeholder='English Detail') }}
+                                        {% endif %}
+
+                                    </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div >
+                        <div class="d-flex align-items-center">
+                          <div class="me-3">
+                              <!-- Avatar -->
+                              <div class="user-avatar xl-avatar">
+                                  <img class="rounded" src="/static/assets/img/Englandavatar.png" alt="change cover photo">
+                              </div>
+                          </div>
+
+<div class="form-group" title="The Picture of promotion that display by English language.">
+        {{ form.ENimagebase64.label(class="form-control-label") }} 
+        {% if
+          form.ENimagebase64.errors %} {{ form.ENimagebase64(class="form-control
+          form-control-sm is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.ENimagebase64.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+          {% else %} {{ form.ENimagebase64(class="form-control form-control-sm") }} 
+          {%endif %} 
+          </div>                          
+                      </div>
+                      </div>
+                  </div>
+          </div>
+      </div>
+            <div class="col-12 col-xl-6">
+          <div class="card card-body shadow-sm mb-4">
+                  <div class="row">
+                            <div>
+                                <div class="form-group" title="The Korean title which display daily.">
+                                {{ form.KRTitle.label(class="form-control-label") }} 
+                                    {% if form.KRTitle.errors %} 
+                                        {{ form.KRTitle(class="form-control form-control is-invalid") }}
+                                        <div class="invalid-feedback">
+                                                {% for error in form.KRTitle.errors %}
+                                            <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %} 
+                                        {{ form.KRTitle(class="form-control form-control ",placeholder='대한민국 제목') }}
+                                    {% endif %}
+                                </div>
+                             </div>
+                             </div>
+                             <div class="row">
+                                <div>
+                        <div class="form-group" title="The South Korean detail which display on detail tag.">
+                            {{ form.KRdetail.label(class="form-control-label") }} 
+                                {% if form.KRdetail.errors %} 
+                                    {{ form.KRdetail(class="form-control form-control is-invalid") }}
+                                    <div class="invalid-feedback">
+                                            {% for error in form.KRdetail.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %} 
+                                    {{ form.KRdetail(class="form-control form-control ",placeholder='한국 상세') }}
+                                {% endif %}
+                            </div>
+                      </div>
+                  </div>
+                  <div class="row align-items-center">
+                    <div>
+                    <div class="form-group" title="The South Korean Description that only display when click on detail tag.">
+                    {{ form.KRdescription.label(class="form-control-label") }} 
+                                        {% if form.KRdescription.errors %} 
+                                            {{ form.KRdescription(class="form-control form-control is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                 {% for error in form.KRdescription.errors %}
+                                                <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %} 
+                                            {{ form.KRdescription(class="form-control form-control ",placeholder='한국 프로모션 설명') }}
+                                        {% endif %}
+                                   
+                                    </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div >
+                        <div class="d-flex align-items-center">
+                          <div class="me-3">
+                              <!-- Avatar -->
+                              <div class="user-avatar xl-avatar">
+                                  <img class="rounded" src="/static/assets/img/koreanavatar.png" alt="change cover photo">
+                              </div>
+                          </div>
+                          <div class="form-group" title="The Picture of promotion that display by South Korean language.">
+
+                            {{ form.KRimagebase64.label(class="form-control-label") }} 
+                            {% if
+                            form.KRimagebase64.errors %} 
+                            <span class="icon icon-sm"><span class="fas fa-paperclip me-3"></span></span>
+                            {{ form.KRimagebase64(class="form-control
+                            form-control-sm is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.KRimagebase64.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %} 
+                            {{ form.KRimagebase64(class="form-control form-control-sm ") }} 
+                            {%endif %} 
+                            </div>                            
+                      </div>
+                      </div>
+                  </div>
+          </div>
+      </div>
+        <div class="col-12 col-xl-6">
+          <div class="card card-body shadow-sm mb-4">
+                  <div class="row">
+                            <div>
+                                 <div class="form-group" title="The Chinese title which display daily.">
+                                    {{ form.CNTitle.label(class="form-control-label") }}
+                                        {% if form.CNTitle.errors %} 
+                                            {{ form.CNTitle(class="form-control form-control is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                 {% for error in form.CNTitle.errors %}
+                                                <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %} 
+                                            {{ form.CNTitle(class="form-control form-control ",placeholder='中文標題') }}
+                                        {% endif %}
+
+                                    </div>
+                             </div>
+                             </div>
+                             <div class="row">
+                                <div>
+                                   <div class="form-group" title="The Chinese Detail which display on detail tag.">
+
+                                    {{ form.CNdetail.label(class="form-control-label") }} 
+                                        {% if form.CNdetail.errors %} 
+                                            {{ form.CNdetail(class="form-control form-control is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                 {% for error in form.CNdetail.errors %}
+                                                <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %} 
+                                            {{ form.CNdetail(class="form-control form-control ",placeholder='中國細節') }}
+                                        {% endif %}
+                      </div>
+                  </div>
+                  <div class="row align-items-center">
+                      <div>
+                                   <div class="form-group" title="The Chinese Description that only display when click on detail tag.">
+
+                                    {{ form.CNdescription.label(class="form-control-label") }} 
+                                        {% if form.CNdescription.errors %} 
+                                            {{ form.CNdescription(class="form-control form-control is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                 {% for error in form.CNdescription.errors %}
+                                                <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %} 
+                                            {{ form.CNdescription(class="form-control form-control ",placeholder='中文說明') }}
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="row">
+                      <div >
+                        <div class="d-flex align-items-center">
+                          <div class="me-3">
+                              <!-- Avatar -->
+                              <div class="user-avatar xl-avatar">
+                                  <img class="rounded" src="/static/assets/img/chinaava.png" alt="change cover photo">
+                              </div>
+                          </div>
+                          <div class="form-group" title="The Picture of promotion that display by Chinese language.">
+
+                            {{ form.CNimagebase64.label(class="form-control-label") }} 
+                            {% if
+                            form.CNimagebase64.errors %} 
+                            <span class="icon icon-sm"><span class="fas fa-paperclip me-3"></span></span>
+                            {{ form.CNimagebase64(class="form-control
+                            form-control-sm is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.CNimagebase64.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %} 
+                            {{ form.CNimagebase64(class="form-control form-control-sm ") }} 
+                            {%endif %} 
+                            </div>                            
+                            </div>                            
+                      </div>
+                      </div>
+                  </div>
+          </div>
+      </div>
+       
+      <div class="col-12 col-xl-6">
+          <div class="row">
+              <div class="col-12 mb-4">
+                  <div class="card shadow-sm p-0">
+                      <div class="card-body pb-5">
+                          <ul class="list-group list-group-flush">
+                            <li class="list-group-item align-items-center justify-content-between px-0 border-bottom">
+                                    <div>
+                                    <div class="form-group" title="The name of Promotion which display on Sidebar.">
+
+                                    {{ form.eventname.label(class="form-control-label") }} 
+                                        {% if form.eventname.errors %} 
+                                            {{ form.eventname(class="is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                 {% for error in form.eventname.errors %}
+                                                <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %} 
+                                            {{ form.eventname(class="form-control ",placeholder='Promotion name') }}
+                                        {% endif %}
+
+                                    </div>
+                                <div class ="row">
+                                    <div class="form-group" title="The Url that redirect when Client click on Picture.">
+
+                                    {{form.urldetail.label}} 
+                                        {% if form.urldetail.errors %} 
+                                            {{ form.urldetail(class="form-control form-control is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                 {% for error in form.urldetail.errors %}
+                                                <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %} 
+                                            {{ form.urldetail(class="form-control text-center",placeholder='') }}
+                                        {% endif %}
+
+                                    </div>
+                                    </div>
+                             </div>
+                            </li>
+                            <li class="list-group-item d-flex align-items-center justify-content-between px-0 border-bottom">
+                                <div>
+                                    <h3 class="h6 mb-1">Select Color</h3>
+                                    {{ form.color }}
+                                </div>
+                                <div>
+                                    <h3 class="h6 mb-1">Visible status</h3>
+                                </div>
+                                <div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="user-notification-1" checked>
+                                        <label class="form-check-label" for="user-notification-1"></label>
+                                    </div>
+                                </div>
+                             
+                                </div>
+                                
+                            </li>
+                        </ul>
+                      </div>
+                <div class="mt-3">
+                {{ form.csrf_token }}
+                {{form.submit(class="btn btn-dark" ,type="submit")}}
+                </div>
+                    </div>
+                    
+              </div>
+              </form>
+{% endblock content %}
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
+
